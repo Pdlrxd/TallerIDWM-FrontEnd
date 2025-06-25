@@ -1,31 +1,22 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, Form } from "@/components/ui/form";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiBackend } from "@/clients/axios";
 import { ResponseAPI } from "@/interfaces/ResponseAPI";
 import { User } from "@/interfaces/User";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/contexts/auth/AuthContext";
-import { ArrowLeftIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-
 const formSchema = z.object({
-    email: z.string().email({
-        message: "Ingrese un correo electrónico válido.",
-    }).nonempty({
-        message: "Email es requerido."
-    }),
-
-    password: z.string().nonempty({
-        message: "Contraseña es requerida."
-    }),
-})
+    email: z.string().email({ message: "Ingrese un correo electrónico válido." }).nonempty({ message: "Email es requerido." }),
+    password: z.string().nonempty({ message: "Contraseña es requerida." }),
+});
 
 export const LoginPage = () => {
     const form = useForm<z.infer<typeof formSchema>>({
@@ -35,23 +26,19 @@ export const LoginPage = () => {
             password: "",
         },
     });
+
     const [errors, setErrors] = useState<string | null>(null);
-    const [errorBool, setErrorBool] = useState<boolean>(false);
     const { auth } = useContext(AuthContext);
     const router = useRouter();
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            console.log("Valores enviados de formulario:", values);
-            const { data } = await ApiBackend.post<ResponseAPI>('auth/login', values);
+            const { data } = await ApiBackend.post<ResponseAPI>("auth/login", values);
+
             if (data.success === false) {
-                console.error("Error en la respuesta del servidor:", data.message);
-                setErrors('Error en la respuesta del servidor:');
-                setErrorBool(true);
+                setErrors(data.message || "Correo o contraseña incorrectos.");
                 return;
             }
-            setErrors(null);
-            setErrorBool(false);
 
             const token = data.data;
 
@@ -60,52 +47,33 @@ export const LoginPage = () => {
                 token: token,
             };
 
-            console.log("Datos del usuario:", user_);
             auth(user_);
-            router.push('/404');
-           
+            router.push("/");
         } catch (error: any) {
-            let errorCatch = error.response.data.message;
-            console.error("Error al enviar el formulario:", errorCatch);
-            setErrors(errorCatch);
-            setErrorBool(true);
+            const errorMessage = error?.response?.data?.message || "Error al iniciar sesión. Intente nuevamente.";
+            setErrors(errorMessage);
         }
-    }
+    };
 
     return (
         <div className="flex flex-col md:flex-row h-screen">
-
+            
             {/* Lado izquierdo */}
-            <div className="md:w-1/2 w-full bg-blue-700 text-white flex flex-col justify-center items-center p-10">
-                <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-                    Bienvenido a <br className="hidden md:block" /> Intro. al Desarrollo Web Móvil 👋
+            <div className="md:w-1/2 w-full bg-black text-white flex flex-col justify-center items-center p-10">
+                <h1 className="text-5xl md:text-6xl font-extrabold mb-8 text-center">
+                    BLACKCAT E-Commerce
                 </h1>
-                <p className="text-base md:text-lg text-justify max-w-md">
-                    Evita tareas repetitivas y gana tiempo con automatización.
-                    Mejora tu productividad como desarrollador móvil.
+                <p className="text-xl md:text-2xl text-center max-w-lg">
+                    La mejor plataforma para encontrar tus productos favoritos.
                 </p>
-                <p className="mt-10 text-xs md:text-sm text-gray-200 text-center">
-                    © 2025 WebMóvil. Todos los derechos reservados.
-                </p>
-
-                <Button variant={"outline"} className="mt-4 text-blue-600" onClick={() => router.back()}>
-                    <ArrowLeftIcon/> Volver
-                </Button>
             </div>
 
             {/* Lado derecho */}
-            <div className="md:w-1/2 w-full flex items-center justify-center bg-white px-6 py-10">
-                <div className="w-full max-w-md">
-                    <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center md:text-left">Ayudantía WebMóvil</h2>
-                    <h3 className="text-lg md:text-xl font-medium mb-2 text-center md:text-left">
-                        ¡Bienvenido de nuevo!
-                    </h3>
-                    <p className="mb-4 text-sm text-gray-600 text-center md:text-left">
-                        ¿No tienes cuenta?{' '}
-                        <a href="#" className="text-blue-600 underline">
-                            Crea una ahora
-                        </a>, es gratis.
-                    </p>
+            <div className="md:w-1/2 w-full flex items-center justify-center bg-white px-10 py-12">
+                <div className="w-full max-w-lg">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
+                        Inicio de Sesión
+                    </h2>
 
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -114,42 +82,59 @@ export const LoginPage = () => {
                                 name="email"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Correo</FormLabel>
+                                        <FormLabel className="text-lg">Correo electrónico</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="correo@example.com" {...field} />
+                                            <Input 
+                                                placeholder="correo@example.com" 
+                                                className="h-12 text-lg" 
+                                                {...field} 
+                                                onChange={(e) => {
+                                                    field.onChange(e);
+                                                    if (e.target.value.length > 0) setErrors(null);
+                                                }}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
+
                             <FormField
                                 control={form.control}
                                 name="password"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Contraseña</FormLabel>
+                                        <FormLabel className="text-lg">Contraseña</FormLabel>
                                         <FormControl>
-                                            <Input type="password" placeholder="********" {...field} />
+                                            <Input 
+                                                type="password" 
+                                                placeholder="********" 
+                                                className="h-12 text-lg" 
+                                                {...field} 
+                                                onChange={(e) => {
+                                                    field.onChange(e);
+                                                    if (e.target.value.length > 0) setErrors(null);
+                                                }}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
-                            {errorBool && (
-                                <>
-                                    <div className="text-red-500 text-sm mt-2 p-2 bg-red-100 rounded">
-                                        {errors}
-                                    </div>
-                                </>
+
+                            {errors && (
+                                <div className="text-red-500 text-base bg-red-100 p-3 rounded">
+                                    {errors}
+                                </div>
                             )}
-                            <Button type="submit">Iniciar sesión</Button>
+
+                            <Button type="submit" className="w-full h-12 text-lg">Iniciar Sesión</Button>
                         </form>
                     </Form>
-                    <div className="mt-4 text-sm text-center md:text-left">
-                        ¿Olvidaste tu contraseña?{' '}
-                        <a href="#" className="text-blue-600 underline">
-                            Haz clic aquí
-                        </a>
+
+                    <div className="mt-6 text-md text-center">
+                        ¿No tienes cuenta?{" "}
+                        <a href="#" className="text-blue-600 underline">Regístrate aquí</a>
                     </div>
                 </div>
             </div>
