@@ -2,6 +2,7 @@ import { ApiBackend } from "@/clients/axios";
 import { Product } from "@/interfaces/Product";
 import { ResponseAPI } from "@/interfaces/ResponseAPI";
 
+
 export interface ProductFilters {
     pageNumber: number;
     pageSize: number;
