@@ -12,6 +12,7 @@ import { User } from "@/interfaces/User";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/contexts/auth/AuthContext";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const formSchema = z.object({
     email: z.string().email({ message: "Ingrese un correo electrónico válido." }).nonempty({ message: "Email es requerido." }),
@@ -134,7 +135,9 @@ export const LoginPage = () => {
 
                     <div className="mt-6 text-md text-center">
                         ¿No tienes cuenta?{" "}
-                        <a href="#" className="text-blue-600 underline">Regístrate aquí</a>
+                        <Link href="/register" className="text-blue-600 underline">
+                            Regístrate aquí
+                        </Link>
                     </div>
                 </div>
             </div>
