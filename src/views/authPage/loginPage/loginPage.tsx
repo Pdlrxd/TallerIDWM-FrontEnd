@@ -67,8 +67,12 @@ export const LoginPage = () => {
             const user_: User = {
                 email: payload.email,
                 token: token,
-                role: payload.role
+                role: payload.role,
+                firstName: payload.given_name,
+                lastName: payload.family_name
             };
+
+
 
             auth(user_);
 

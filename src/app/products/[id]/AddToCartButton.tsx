@@ -1,29 +1,30 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/Button";
+import { useContext } from "react";
+import { AuthContext } from "@/contexts/auth/AuthContext";
 
-interface AddToCartButtonProps {
-  isLoggedIn: boolean;
-}
-
-export function AddToCartButton({ isLoggedIn }: AddToCartButtonProps) {
+export function AddToCartButton() {
   const router = useRouter();
+  const { status } = useContext(AuthContext);
 
   const handleAddToCart = () => {
-    if (!isLoggedIn) {
+    if (status !== "authenticated") {
       router.push("/login");
       return;
     }
-    // Aquí agregas lógica para carrito
+
+    // Aquí agregas la lógica real para añadir al carrito
     alert("Producto agregado al carrito");
   };
 
   return (
-    <button
+    <Button
       onClick={handleAddToCart}
-      className="bg-primary text-white px-6 py-3 rounded hover:bg-primary/90 transition"
+      className="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg py-3"
     >
       Agregar al carrito
-    </button>
+    </Button>
   );
 }
