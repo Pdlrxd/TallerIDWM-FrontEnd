@@ -14,6 +14,17 @@ import { AuthContext } from "@/contexts/auth/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+// Función simple para decodificar payload del token
+const parseJwt = (token: string) => {
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        return JSON.parse(atob(base64));
+    } catch (e) {
+        return null;
+    }
+};
+
 const formSchema = z.object({
     email: z.string().email({ message: "Ingrese un correo electrónico válido." }).nonempty({ message: "Email es requerido." }),
     password: z.string().nonempty({ message: "Contraseña es requerida." }),
@@ -42,14 +53,30 @@ export const LoginPage = () => {
             }
 
             const token = data.data;
+            const payload = parseJwt(token);
+
+            if (!payload) {
+                setErrors("Token inválido recibido.");
+                return;
+            }
+
+            // Guardar token
+            localStorage.setItem("token", token);
 
             const user_: User = {
-                email: values.email,
+                email: payload.email,
                 token: token,
+                role: payload.role
             };
 
             auth(user_);
-            router.push("/");
+
+            // Redirección por rol
+            if (payload.role === "Admin") {
+                router.push("/admin");
+            } else {
+                router.push("/shop");
+            }
         } catch (error: any) {
             const errorMessage = error?.response?.data?.message || "Error al iniciar sesión. Intente nuevamente.";
             setErrors(errorMessage);
@@ -58,8 +85,6 @@ export const LoginPage = () => {
 
     return (
         <div className="flex flex-col md:flex-row h-screen">
-            
-            {/* Lado izquierdo */}
             <div className="md:w-1/2 w-full bg-black text-white flex flex-col justify-center items-center p-10">
                 <h1 className="text-5xl md:text-6xl font-extrabold mb-8 text-center">
                     BLACKCAT E-Commerce
@@ -69,7 +94,6 @@ export const LoginPage = () => {
                 </p>
             </div>
 
-            {/* Lado derecho */}
             <div className="md:w-1/2 w-full flex items-center justify-center bg-white px-10 py-12">
                 <div className="w-full max-w-lg">
                     <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
