@@ -8,9 +8,6 @@ const ApiBackend = axios.create({
     "Content-Type": "application/json",
     Accept: "application/json, text/plain, */*",
   },
-  httpsAgent: new (require("https").Agent)({
-    rejectUnauthorized: false, // <-- Ignora certificados autofirmados
-  }),
 });
 
 export { ApiBackend };

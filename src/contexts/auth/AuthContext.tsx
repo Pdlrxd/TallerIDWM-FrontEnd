@@ -3,6 +3,7 @@
 import { User } from "@/interfaces/User";
 import { authReducer, AuthState } from "./AuthReducer";
 import { createContext, useReducer, useEffect } from "react";
+import { UserService } from "@/services/UserService";
 
 type AuthContextProps = {
     user: User | null;
@@ -10,6 +11,7 @@ type AuthContextProps = {
     auth: (user: User) => void;
     logout: () => void;
     updateUser: (user: User) => void;
+    // refreshToken eliminado
 }
 
 const authInitialState: AuthState = {
@@ -46,18 +48,22 @@ export const AuthProvider = ({ children }: any) => {
             return;
         }
 
-        // Opcional: validar expiración token aquí
-
-        const user: User = {
-            firstName: payload.given_name || '',
-            lastName: payload.family_name || '',
-            email: payload.email,
-            role: payload.role,
-            token: token
-        };
-
-        dispatch({ type: 'auth', payload: { user } });
+        UserService.getProfile(token).then(response => {
+            if (response.success) {
+                const userData = response.data as User;
+                userData.token = token;
+                dispatch({ type: 'auth', payload: { user: userData } });
+            } else {
+                localStorage.removeItem('token');
+                dispatch({ type: 'non-authenticated' });
+            }
+        }).catch(() => {
+            localStorage.removeItem('token');
+            dispatch({ type: 'non-authenticated' });
+        });
     }, []);
+
+    // refreshToken eliminado
 
     const auth = (user: User) => {
         localStorage.setItem('token', user.token);
@@ -79,7 +85,8 @@ export const AuthProvider = ({ children }: any) => {
                 ...state,
                 logout,
                 auth,
-                updateUser
+                updateUser,
+                // refreshToken ya no está disponible
             }}
         >
             {children}
