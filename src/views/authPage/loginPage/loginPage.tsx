@@ -13,6 +13,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "@/contexts/auth/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { ArrowLeftIcon } from "lucide-react";
 
 // Función simple para decodificar payload del token
 const parseJwt = (token: string) => {
@@ -75,7 +76,7 @@ export const LoginPage = () => {
             if (payload.role === "Admin") {
                 router.push("/admin");
             } else {
-                router.push("/shop");
+                router.push("/");
             }
         } catch (error: any) {
             const errorMessage = error?.response?.data?.message || "Error al iniciar sesión. Intente nuevamente.";
@@ -92,6 +93,11 @@ export const LoginPage = () => {
                 <p className="text-xl md:text-2xl text-center max-w-lg">
                     La mejor plataforma para encontrar tus productos favoritos.
                 </p>
+
+                <Button variant={"outline"} className="mt-4 text-blue-600" onClick={() => router.back()}>
+                    <ArrowLeftIcon/> Volver
+                </Button>
+                
             </div>
 
             <div className="md:w-1/2 w-full flex items-center justify-center bg-white px-10 py-12">
@@ -109,10 +115,10 @@ export const LoginPage = () => {
                                     <FormItem>
                                         <FormLabel className="text-lg">Correo electrónico</FormLabel>
                                         <FormControl>
-                                            <Input 
-                                                placeholder="correo@example.com" 
-                                                className="h-12 text-lg" 
-                                                {...field} 
+                                            <Input
+                                                placeholder="correo@example.com"
+                                                className="h-12 text-lg"
+                                                {...field}
                                                 onChange={(e) => {
                                                     field.onChange(e);
                                                     if (e.target.value.length > 0) setErrors(null);
@@ -131,11 +137,11 @@ export const LoginPage = () => {
                                     <FormItem>
                                         <FormLabel className="text-lg">Contraseña</FormLabel>
                                         <FormControl>
-                                            <Input 
-                                                type="password" 
-                                                placeholder="********" 
-                                                className="h-12 text-lg" 
-                                                {...field} 
+                                            <Input
+                                                type="password"
+                                                placeholder="********"
+                                                className="h-12 text-lg"
+                                                {...field}
                                                 onChange={(e) => {
                                                     field.onChange(e);
                                                     if (e.target.value.length > 0) setErrors(null);

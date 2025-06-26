@@ -8,7 +8,7 @@ import { createContext, useReducer } from "react";
 type AuthContextProps = {
     user: User | null;
     status: 'authenticated' | 'non-authenticated' | 'checking';
-    auth:(user: User) => void;
+    auth: (user: User) => void;
     logout: () => void;
     updateUser: (user: User) => void;
 }
@@ -20,18 +20,18 @@ const authInitialState: AuthState = {
 
 export const AuthContext = createContext({} as AuthContextProps);
 
-export const AuthProvider = ({children}: any) => {
+export const AuthProvider = ({ children }: any) => {
     const [state, dispatch] = useReducer(authReducer, authInitialState);
 
     const auth = (user: User) => {
-        dispatch({type: 'auth', payload: {user}});
+        dispatch({ type: 'auth', payload: { user } });
     }
     const logout = () => {
         localStorage.removeItem('token');
-        dispatch({type: 'logout'});
+        dispatch({ type: 'logout' });
     }
     const updateUser = (user: User) => {
-        dispatch({type: 'updateUser', payload: {user}});
+        dispatch({ type: 'updateUser', payload: { user } });
     }
 
     return (
