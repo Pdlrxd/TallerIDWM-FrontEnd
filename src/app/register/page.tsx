@@ -1,10 +1,10 @@
-import { RegisterPage } from "@/views/registerPage/registerPage";
+import { RegisterPage } from "@/views/authPage/registerPage/registerPage";
 
 
-export default function Login(){
+export default function Login() {
 
     console.log("Register Page Cargada");
 
-    return <RegisterPage/>
+    return <RegisterPage />
 
 }
