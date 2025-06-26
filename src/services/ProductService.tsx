@@ -27,23 +27,24 @@ export interface ProductResponseData {
 }
 
 export const ProductServices = {
+
     async fetchProducts(filters: ProductFilters): Promise<ProductResponseData> {
         const { data } = await ApiBackend.get<ResponseAPI>("product/filter-public", {
             params: filters
         });
 
-        if (!data.success) {
-            throw new Error(data.message || "Error al obtener los productos");
-        }
-
-        if (!data.data || !Array.isArray(data.data.data)) {
-            throw new Error("No se encontraron productos");
-        }
-
-        if (data.errors) {
-            console.error("Errors:", data.errors);
-        }
+        if (!data.success) throw new Error(data.message || "Error al obtener los productos");
 
         return data.data;
+    },
+
+    async getProductById(id: number): Promise<Product> {
+        const { data } = await ApiBackend.get<Product>(`product/${id}`);
+
+        if (!data) throw new Error("Producto no encontrado");
+
+        return data;
     }
-}
+
+
+};

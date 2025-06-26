@@ -94,10 +94,11 @@ export const LoginPage = () => {
                     La mejor plataforma para encontrar tus productos favoritos.
                 </p>
 
-                <Button variant={"outline"} className="mt-4 text-blue-600" onClick={() => router.back()}>
-                    <ArrowLeftIcon/> Volver
+                <Button variant={"outline"} className="mt-4 text-blue-600" onClick={() => router.push("/")}>
+                    <ArrowLeftIcon /> Inicio
                 </Button>
-                
+
+
             </div>
 
             <div className="md:w-1/2 w-full flex items-center justify-center bg-white px-10 py-12">
