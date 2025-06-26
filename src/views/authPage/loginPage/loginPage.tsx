@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
@@ -67,8 +67,12 @@ export const LoginPage = () => {
             const user_: User = {
                 email: payload.email,
                 token: token,
-                role: payload.role
+                role: payload.role,
+                firstName: payload.given_name,
+                lastName: payload.family_name
             };
+
+
 
             auth(user_);
 
@@ -94,10 +98,11 @@ export const LoginPage = () => {
                     La mejor plataforma para encontrar tus productos favoritos.
                 </p>
 
-                <Button variant={"outline"} className="mt-4 text-blue-600" onClick={() => router.back()}>
-                    <ArrowLeftIcon/> Volver
+                <Button variant={"outline"} className="mt-4 text-blue-600" onClick={() => router.push("/")}>
+                    <ArrowLeftIcon /> Inicio
                 </Button>
-                
+
+
             </div>
 
             <div className="md:w-1/2 w-full flex items-center justify-center bg-white px-10 py-12">

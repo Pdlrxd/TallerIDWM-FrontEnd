@@ -5,29 +5,46 @@ import { ResponseAPI } from "@/interfaces/ResponseAPI";
 export interface ProductFilters {
     pageNumber: number;
     pageSize: number;
+    category?: string;
+    brand?: string;
+    condition?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    sort?: string;
+}
+
+
+export interface Pagination {
+    totalCount: number;
+    pageSize: number;
+    currentPage: number;
+    totalPages: number;
+}
+
+export interface ProductResponseData {
+    data: Product[];
+    pagination: Pagination;
 }
 
 export const ProductServices = {
 
-    async fetchProducts(filters: ProductFilters) {
-        const { data } = await ApiBackend.get<ResponseAPI>("product/shop", {
+    async fetchProducts(filters: ProductFilters): Promise<ProductResponseData> {
+        const { data } = await ApiBackend.get<ResponseAPI>("product/filter-public", {
             params: filters
         });
 
-        if (!data.success) {
-            throw new Error(data.message || "Error al obtener los productos");
-        }
+        if (!data.success) throw new Error(data.message || "Error al obtener los productos");
 
-        if (!data.data || !Array.isArray(data.data.data)) {
-            throw new Error("No se encontraron productos");
-        }
+        return data.data;
+    },
 
-        if (data.errors) {
-            console.error("Errors:", data.errors);
-        }
+    async getProductById(id: number): Promise<Product> {
+        const { data } = await ApiBackend.get<Product>(`product/${id}`);
 
-        return data.data.data as Product[];
+        if (!data) throw new Error("Producto no encontrado");
+
+        return data;
     }
 
 
-}
+};
