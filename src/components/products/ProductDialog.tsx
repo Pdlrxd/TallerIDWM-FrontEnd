@@ -1,6 +1,10 @@
+"use client";
+
 import { Product } from "@/interfaces/Product";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import Image from "next/image";
+import { Button } from "@/components/ui/Button";
+import { useRouter } from "next/navigation";
 
 interface ProductDialogProps {
     product: Product | null;
@@ -9,7 +13,17 @@ interface ProductDialogProps {
 }
 
 export const ProductDialog = ({ product, open, onClose }: ProductDialogProps) => {
+    const router = useRouter();
+
     if (!product) return null;
+
+    const goToProductDetail = () => {
+        onClose(); // cerrar dialog
+        router.push(`/products/${product.id}`);
+    };
+
+    console.log("Producto seleccionado en modal:", product);
+
 
     return (
         <Dialog open={open} onOpenChange={onClose}>
@@ -39,7 +53,7 @@ export const ProductDialog = ({ product, open, onClose }: ProductDialogProps) =>
                     )}
 
                     <p className="text-blue-700 font-bold text-3xl mt-4">
-                    ${product.price.toFixed(2)}
+                        ${product.price.toFixed(2)}
                     </p>
 
                     <p className="text-gray-700 text-center">{product.description ?? "Sin descripción"}</p>
@@ -66,6 +80,13 @@ export const ProductDialog = ({ product, open, onClose }: ProductDialogProps) =>
                             </p>
                         )}
                     </div>
+
+                    <Button
+                        className="mt-6 w-full text-lg py-3"
+                        onClick={goToProductDetail}
+                    >
+                        Ver más detalles
+                    </Button>
                 </div>
             </DialogContent>
         </Dialog>

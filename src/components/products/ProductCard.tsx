@@ -26,7 +26,7 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
                 <h3 className="font-semibold text-lg truncate">{product.title}</h3>
                 <p className="mt-2 text-blue-700 font-bold text-xl">${product.price.toFixed(2)}</p>
                 <div className="mt-auto">
-                    <Button className="w-full">Agregar al Carrito</Button>
+                    <Button className="w-full">Mas Detalles</Button>
                 </div>
             </div>
         </div>
