@@ -1,7 +1,6 @@
 import { Product } from "@/interfaces/Product";
 import { ProductServices } from "@/services/ProductService";
 import Image from "next/image";
-import { cookies } from "next/headers";
 import Carousel from "./Carousel";
 import { AddToCartButton } from "./AddToCartButton";
 import { Navbar } from "@/components/Navbar";
@@ -36,15 +35,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
     return <div className="p-8 text-center">Producto no encontrado.</div>;
   }
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value ?? null;
-  const isLoggedIn = Boolean(token);
-
   return (
     <>
       <Navbar />
       <div className="min-h-screen bg-gray-900 p-6">
         <main className="max-w-5xl mx-auto bg-white rounded-lg shadow-md p-8 relative">
+          
           {/* Botón volver */}
           <div className="absolute top-6 left-6">
             <BackButton />
@@ -68,14 +64,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
 
           <div className="space-y-4 mb-6">
-            <p className="text-xl font-semibold text-green-700">${product.price.toFixed(0)} CLP</p>
+            <p className="text-xl font-semibold text-green-700">
+              ${product.price.toFixed(0)} CLP
+            </p>
             <p>{product.description}</p>
             <p>
               <strong>Stock:</strong> {product.stock ?? "Sin información"}
             </p>
           </div>
 
-          <AddToCartButton isLoggedIn={isLoggedIn} />
+          <AddToCartButton />
         </main>
       </div>
     </>

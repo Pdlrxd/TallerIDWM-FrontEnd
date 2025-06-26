@@ -22,9 +22,6 @@ export const ProductDialog = ({ product, open, onClose }: ProductDialogProps) =>
         router.push(`/products/${product.id}`);
     };
 
-    console.log("Producto seleccionado en modal:", product);
-
-
     return (
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent className="max-w-3xl w-full mx-auto">
@@ -82,10 +79,10 @@ export const ProductDialog = ({ product, open, onClose }: ProductDialogProps) =>
                     </div>
 
                     <Button
-                        className="mt-6 w-full text-lg py-3"
+                        className="mt-6 w-full"
                         onClick={goToProductDetail}
                     >
-                        Ver más detalles
+                        Ver más detalles y agregar al carrito
                     </Button>
                 </div>
             </DialogContent>
