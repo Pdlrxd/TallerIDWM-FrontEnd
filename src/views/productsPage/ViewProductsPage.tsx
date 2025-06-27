@@ -1,14 +1,14 @@
 "use client";
 
-import { ProductCard } from "@/components/products/ProductCard";
-import { ProductDialog } from "@/components/products/ProductDialog";
-import { ProductFilters } from "@/components/products/ProductFilters";
+import { ProductCard } from "@/components/shared/product/ProductCard";
+import { ProductDialog } from "@/components/shared/product/ProductDialog";
+import { ProductFilters } from "@/components/shared/product/ProductFilters";
 import { Product } from "@/interfaces/Product";
 import { useProductStore } from "@/stores/ProductStore";
 import { useEffect, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Pagination } from "@/components/ui/pagination";
-import { ProductSkeleton } from "@/components/products/ProductSkeleton";
+import { ProductSkeleton } from "@/components/shared/product/ProductSkeleton";
 
 export default function ViewProductsPage() {
   const { products, loading, fetchProducts, filters, setFilters, pagination } = useProductStore();

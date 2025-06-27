@@ -5,6 +5,7 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "@/contexts/auth/AuthContext";
 import toast from "react-hot-toast";
 import { CartService } from "@/services/CartService";
+import { Button } from "@/components/ui/Button";
 
 interface AddToCartButtonProps {
   productId: number;
@@ -43,11 +44,11 @@ export function AddToCartButton({ productId, quantity }: AddToCartButtonProps) {
   };
 
   return (
-    <button
+    <Button
       onClick={handleAddToCart}
       className="text-white bg-green-600 hover:bg-green-700 shadow-lg rounded-lg px-6 py-3 text-base font-semibold transition"
     >
       Agregar al carrito
-    </button>
+    </Button>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { Product } from "@/interfaces/Product";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../../ui/dialog";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { useRouter } from "next/navigation";

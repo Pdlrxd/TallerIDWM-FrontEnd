@@ -72,7 +72,7 @@ export const Navbar = () => {
 
           {status === "authenticated" && user ? (
             <div className="relative" ref={profileMenuRef}>
-              <button
+              <Button
                 onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                 className="text-gray-300 hover:text-white font-bold text-sm uppercase cursor-pointer"
                 style={{ fontFamily: "'Arial Black', Arial, sans-serif" }}
@@ -80,24 +80,24 @@ export const Navbar = () => {
                 type="button"
               >
                 {user.firstName?.split(" ")[0].toUpperCase() || ""}
-              </button>
+              </Button>
 
               {profileMenuOpen && (
                 <div className="absolute right-0 mt-2 w-52 bg-white text-black rounded shadow-lg z-50 flex flex-col">
-                  <button
+                  <Button
                     onClick={goToProfile}
                     className="px-6 py-3 hover:bg-gray-100 cursor-pointer text-left text-base text-center"
                     type="button"
                   >
                     Ver Perfil
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={handleLogout}
                     className="px-6 py-3 hover:bg-gray-100 cursor-pointer text-left text-base text-center"
                     type="button"
                   >
                     Cerrar Sesión
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>
@@ -112,9 +112,9 @@ export const Navbar = () => {
 
         {/* Mobile Hamburger */}
         <div className="md:hidden">
-          <button onClick={toggleMenu} type="button">
+          <Button onClick={toggleMenu} type="button">
             {menuOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -136,7 +136,7 @@ export const Navbar = () => {
 
           {status === "authenticated" && user ? (
             <div className="flex flex-col items-center space-y-2">
-              <button
+              <Button
                 onClick={() => {
                   goToProfile();
                   toggleMenu();
@@ -145,8 +145,8 @@ export const Navbar = () => {
                 type="button"
               >
                 {user.firstName?.split(" ")[0].toUpperCase() || ""}
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={() => {
                   handleLogout();
                   toggleMenu();
@@ -155,7 +155,7 @@ export const Navbar = () => {
                 type="button"
               >
                 Cerrar Sesión
-              </button>
+              </Button>
             </div>
           ) : (
             <Link href="/login" className="w-full flex items-center justify-center px-7">

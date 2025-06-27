@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Carousel from "./Carousel";
-import { AddToCartButton } from "./AddToCartButton";
+import Carousel from "../image/Carousel";
+import { AddToCartButton } from "../cartL/AddToCartButton";
 import { Product } from "@/interfaces/Product";
+import { Button } from "@/components/ui/Button";
 
 interface Props {
   product: Product;
@@ -78,21 +79,21 @@ export default function ProductDetail({ product }: Props) {
 
           <div className="mt-8 flex flex-col items-center gap-5">
             <div className="flex items-center justify-center gap-6">
-              <button
+              <Button
                 onClick={decrement}
                 className="bg-gray-300 px-6 py-3 rounded text-xl hover:bg-gray-400"
                 aria-label="Disminuir cantidad"
               >
                 -
-              </button>
+              </Button>
               <span className="text-2xl font-bold select-none">{quantity}</span>
-              <button
+              <Button
                 onClick={increment}
                 className="bg-gray-300 px-6 py-3 rounded text-xl hover:bg-gray-400"
                 aria-label="Aumentar cantidad"
               >
                 +
-              </button>
+              </Button>
             </div>
 
             {error && (
