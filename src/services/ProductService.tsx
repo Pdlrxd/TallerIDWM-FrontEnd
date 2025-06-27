@@ -1,4 +1,4 @@
-import { ApiBackend } from "@/clients/axios";
+import { ApiBackend } from "@/services/axios";
 import { Product } from "@/interfaces/Product";
 import { ResponseAPI } from "@/interfaces/ResponseAPI";
 

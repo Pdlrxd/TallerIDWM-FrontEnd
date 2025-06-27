@@ -1,7 +1,7 @@
-import { ApiBackend } from "@/clients/axios";
+import { ApiBackend } from "./axios"; // o donde tengas el cliente axios configurado
 
-export class CartService {
-  static async addToCart(productId: number, quantity: number, token: string) {
+export const CartService = {
+  addToCart: async (productId: number, quantity: number, token: string) => {
     try {
       const response = await ApiBackend.post(
         "cart/add",
@@ -12,9 +12,15 @@ export class CartService {
           },
         }
       );
-      return response;
-    } catch (error) {
+
+      if (!response.data.success) {
+        throw new Error(response.data.message || "Error agregando producto al carrito");
+      }
+
+      return response.data;
+    } catch (error: any) {
+      console.error("Error en addToCart:", error);
       throw error;
     }
-  }
-}
+  },
+};
