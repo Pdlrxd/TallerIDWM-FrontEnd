@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useCart } from "@/hooks/useCart";
 import { Button } from "@/components/ui/Button";
@@ -13,20 +13,18 @@ export const ViewCartProductContent = () => {
 
   if (cartItems.length === 0)
     return (
-      <div className="text-center py-10 text-white">
-        <h2 className="text-xl font-semibold mb-4">Tu carrito está vacío</h2>
+      <div className="flex flex-col justify-center items-center h-[60vh] text-black">
+        <h2 className="text-5xl font-bold mb-6">Tu carrito está vacío</h2>
         <Button
-          onClick={() => window.location.href = "/"}
-          className="px-12 py-1 text-xl font-bold max-w-xs mx-auto block text-center leading-center"
+          onClick={() => (window.location.href = "/")}
+          className="px-12 py-3 text-2xl font-bold max-w-xs mx-auto bg-gray-200 text-black hover:bg-gray-300"
         >
           Explorar Productos
         </Button>
-
-
-
-
       </div>
     );
+
+
 
   return (
     <div className="max-w-5xl w-full bg-white rounded-2xl shadow-lg p-8 text-black">
@@ -67,7 +65,14 @@ export const ViewCartProductContent = () => {
 
       <div className="text-right mt-10 border-t border-gray-300 pt-6">
         <p className="text-3xl font-extrabold">Total: ${total.toFixed(2)}</p>
-        <Button className="mt-6 px-8 py-3 text-lg">Finalizar Compra</Button>
+        <Button
+          className="mt-6 px-8 py-3 text-lg"
+          onClick={() => window.location.href = "/checkout"}
+        >
+          Finalizar Compra
+        </Button>
+
+
       </div>
     </div>
   );

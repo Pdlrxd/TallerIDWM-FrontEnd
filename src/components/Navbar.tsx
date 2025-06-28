@@ -3,11 +3,15 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { MenuIcon, UserIcon, XIcon, ShoppingCart } from "lucide-react"; // Agregué ShoppingCart
+import { MenuIcon, UserIcon, XIcon, ShoppingCart } from "lucide-react";
 import { Button } from "./ui/Button";
 import { AuthContext } from "@/contexts/auth/AuthContext";
 
-export const Navbar = () => {
+interface NavbarProps {
+  activePage?: string; // prop opcional
+}
+
+export const Navbar = ({ activePage }: NavbarProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const { user, status, logout } = useContext(AuthContext);
@@ -46,16 +50,22 @@ export const Navbar = () => {
   const baseLinkStyle =
     "font-bold text-sm uppercase cursor-pointer font-[Arial Black],Arial,sans-serif";
 
-  const isActive = (path: string) => pathname === path;
+  // Si recibimos activePage desde prop, lo usamos, sino usamos pathname real
+  const currentPath = activePage ?? pathname;
+
+  const isActive = (path: string) => {
+    if (path === "/product") {
+      return currentPath === "/product" || currentPath.startsWith("/product/");
+    }
+    return currentPath === path;
+  };
 
   const activeClass = "bg-white text-black rounded-md px-4 py-2";
-
   const inactiveClass = "text-gray-300 hover:text-white transition";
 
-  // Lista de enlaces, reemplazando "Contacto" con carrito
   const links = [
     { label: "Inicio", href: "/" },
-    { label: "Productos", href: "/about" },
+    { label: "Productos", href: "/product" },
     { label: "Servicios", href: "/services" },
   ];
 
@@ -72,7 +82,8 @@ export const Navbar = () => {
             <li key={href}>
               <Link
                 href={href}
-                className={`${baseLinkStyle} ${isActive(href) ? activeClass : inactiveClass}`}
+                className={`${baseLinkStyle} ${isActive(href) ? activeClass : inactiveClass
+                  }`}
               >
                 {label}
               </Link>
@@ -83,13 +94,12 @@ export const Navbar = () => {
           <li>
             <button
               onClick={() => router.push("/cart")}
-              className={`${baseLinkStyle} ${isActive("/cart") ? activeClass : inactiveClass} flex items-center gap-1`}
+              className={`${baseLinkStyle} ${isActive("/cart") ? activeClass : inactiveClass
+                } flex items-center gap-1`}
               aria-label="Carrito"
               type="button"
             >
               <ShoppingCart size={18} />
-              {/* Si quieres mostrar texto al lado del ícono: */}
-              {/* <span>Carrito</span> */}
             </button>
           </li>
 
@@ -149,12 +159,13 @@ export const Navbar = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden flex flex-col items-center bg-black text-white space-y-4 py-4">
-          {[...links].map(({ label, href }) => (
+          {links.map(({ label, href }) => (
             <Link
               key={href}
               href={href}
               onClick={toggleMenu}
-              className={`${baseLinkStyle} ${isActive(href) ? activeClass : inactiveClass}`}
+              className={`${baseLinkStyle} ${isActive(href) ? activeClass : inactiveClass
+                }`}
             >
               {label}
             </Link>
@@ -166,7 +177,8 @@ export const Navbar = () => {
               router.push("/cart");
               toggleMenu();
             }}
-            className={`${baseLinkStyle} ${isActive("/cart") ? activeClass : inactiveClass} flex items-center gap-1`}
+            className={`${baseLinkStyle} ${isActive("/cart") ? activeClass : inactiveClass
+              } flex items-center gap-1`}
             type="button"
           >
             <ShoppingCart size={18} />

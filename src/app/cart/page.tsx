@@ -1,3 +1,5 @@
+"use client";
+
 import { ViewCartProductContent } from "@/views/cartPage/ViewCartProductContent";
 import { AuthGuard } from "@/components/AuthGuard";
 
