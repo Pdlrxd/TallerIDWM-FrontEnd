@@ -1,14 +1,14 @@
 "use client";
 
-import { ProductCard } from "@/components/products/ProductCard";
-import { ProductDialog } from "@/components/products/ProductDialog";
-import { ProductFilters } from "@/components/products/ProductFilters";
+import { ProductCard } from "@/components/shared/product/ProductCard";
+import { ProductDialog } from "@/components/shared/product/ProductDialog";
+import { ProductFilters } from "@/components/shared/product/ProductFilters";
 import { Product } from "@/interfaces/Product";
-import { useProductStore } from "@/stores/ProductStore";
+import { useProductStore } from "@/contexts/productContext/ProductContext";
 import { useEffect, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Pagination } from "@/components/ui/pagination";
-import { ProductSkeleton } from "@/components/products/ProductSkeleton";
+import { ProductSkeleton } from "@/components/Skeleton";
 
 export default function ViewProductsPage() {
   const { products, loading, fetchProducts, filters, setFilters, pagination } = useProductStore();
@@ -41,10 +41,8 @@ export default function ViewProductsPage() {
     let timer: NodeJS.Timeout;
 
     if (loading) {
-      // Empieza a mostrar skeleton
       setShowLoading(true);
     } else {
-      // Cuando loading cambia a false, espera 1.5s antes de ocultar skeleton
       timer = setTimeout(() => setShowLoading(false), 1500);
     }
 

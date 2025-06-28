@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/Button";
+
 interface ProductFiltersProps {
   filters: {
     category: string;
@@ -100,12 +102,12 @@ export function ProductFilters({ filters, onFilterChange, onApplyFilters }: Prod
         </select>
       </div>
 
-      <button
+      <Button
         onClick={onApplyFilters}
         className="mt-4 w-full bg-primary text-white font-semibold py-2 rounded hover:bg-primary/90 transition"
       >
         Aplicar filtros
-      </button>
+      </Button>
     </aside>
   );
 }

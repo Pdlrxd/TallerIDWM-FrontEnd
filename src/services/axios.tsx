@@ -1,6 +1,7 @@
 import axios from "axios";
+import https from "https";
 
-console.log("API BASE URL:", process.env.NEXT_PUBLIC_API_URL);
+const isLocalhost = process.env.NEXT_PUBLIC_API_URL?.includes("localhost");
 
 const ApiBackend = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -8,6 +9,7 @@ const ApiBackend = axios.create({
     "Content-Type": "application/json",
     Accept: "application/json, text/plain, */*",
   },
+  httpsAgent: isLocalhost ? new https.Agent({ rejectUnauthorized: false }) : undefined,
 });
 
 export { ApiBackend };

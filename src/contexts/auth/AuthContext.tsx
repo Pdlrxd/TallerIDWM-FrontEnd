@@ -11,12 +11,15 @@ type AuthContextProps = {
     auth: (user: User) => void;
     logout: () => void;
     updateUser: (user: User) => void;
-    // refreshToken eliminado
 }
 
 const authInitialState: AuthState = {
     status: 'checking',
     user: null
+}
+
+interface Props {
+    children: React.ReactNode;
 }
 
 export const AuthContext = createContext({} as AuthContextProps);
@@ -31,7 +34,7 @@ const parseJwt = (token: string) => {
     }
 }
 
-export const AuthProvider = ({ children }: any) => {
+export const AuthProvider = ({ children }: Props) => {
     const [state, dispatch] = useReducer(authReducer, authInitialState);
 
     useEffect(() => {
@@ -62,8 +65,6 @@ export const AuthProvider = ({ children }: any) => {
             dispatch({ type: 'non-authenticated' });
         });
     }, []);
-
-    // refreshToken eliminado
 
     const auth = (user: User) => {
         localStorage.setItem('token', user.token);
