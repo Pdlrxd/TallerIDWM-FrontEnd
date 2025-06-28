@@ -103,7 +103,7 @@ export default function ProductDetail({ product }: Props) {
 
           <div className="mt-8 flex justify-center">
             {product.id !== undefined && (
-              <AddToCartButton productId={product.id} quantity={quantity} />
+              <AddToCartButton productId={product.id} quantity={quantity} stock={product.stock ?? 0} />
             )}
           </div>
         </div>

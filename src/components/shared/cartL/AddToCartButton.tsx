@@ -1,18 +1,21 @@
 "use client";
 
+import { useCart } from "@/hooks/useCart";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "@/contexts/auth/AuthContext";
-import toast from "react-hot-toast";
 import { CartService } from "@/services/CartService";
 import { Button } from "@/components/ui/Button";
 
 interface AddToCartButtonProps {
   productId: number;
   quantity: number;
+  stock: number;
 }
 
-export function AddToCartButton({ productId, quantity }: AddToCartButtonProps) {
+export function AddToCartButton({ productId, quantity, stock }: AddToCartButtonProps) {
+  const { cartItems, fetchCart } = useCart(); // Traemos fetchCart
   const router = useRouter();
   const { status } = useContext(AuthContext);
   const [token, setToken] = useState<string>("");
@@ -34,9 +37,19 @@ export function AddToCartButton({ productId, quantity }: AddToCartButtonProps) {
       return;
     }
 
+    const existingItem = cartItems.find(item => item.productId === productId);
+    const currentQuantity = existingItem ? existingItem.quantity : 0;
+    const newTotalQuantity = currentQuantity + quantity;
+
+    if (newTotalQuantity > stock) {
+      toast.error(`No puedes agregar más de ${stock} unidades (ya tienes ${currentQuantity} en el carrito).`);
+      return;
+    }
+
     try {
       await CartService.addToCart(productId, quantity, token);
       toast.success("Producto agregado al carrito");
+      await fetchCart(); // Actualizamos el carrito tras la operación
     } catch (error) {
       console.error("Error al agregar al carrito", error);
       toast.error("Error al agregar al carrito");
