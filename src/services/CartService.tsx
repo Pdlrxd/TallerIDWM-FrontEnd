@@ -29,4 +29,9 @@ export const CartService = {
     });
     return res.data;
   },
+  async removeFromCart(productId: number, token: string) {
+    return ApiBackend.delete(`/cart/remove/${productId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
 };

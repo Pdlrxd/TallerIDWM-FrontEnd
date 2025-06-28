@@ -3,6 +3,7 @@
 import { useCart } from "@/hooks/useCart";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
+import { RemoveFromCartButton } from "@/components/shared/cartL/RemoveFromCartButton";
 
 export const ViewCartProductContent = () => {
   const { cartItems, total, loading } = useCart();
@@ -14,9 +15,16 @@ export const ViewCartProductContent = () => {
     return (
       <div className="text-center py-10 text-white">
         <h2 className="text-xl font-semibold mb-4">Tu carrito está vacío</h2>
-        <Button onClick={() => window.location.href = "/about"}>
+        <Button
+          onClick={() => window.location.href = "/"}
+          className="px-12 py-1 text-xl font-bold max-w-xs mx-auto block text-center leading-center"
+        >
           Explorar Productos
         </Button>
+
+
+
+
       </div>
     );
 
@@ -37,6 +45,7 @@ export const ViewCartProductContent = () => {
               height={120}
               className="rounded object-cover flex-shrink-0"
             />
+
             <div className="ml-6 flex flex-col justify-center flex-grow">
               <h2 className="font-semibold text-lg">{item.title}</h2>
               <p className="mt-1">
@@ -47,8 +56,10 @@ export const ViewCartProductContent = () => {
                 <span className="font-medium">${item.price.toFixed(2)}</span>
               </p>
             </div>
-            <div className="ml-auto text-right">
+
+            <div className="ml-auto text-right flex items-center gap-4">
               <p className="text-2xl font-bold">${item.subtotal.toFixed(2)}</p>
+              <RemoveFromCartButton productId={item.productId} />
             </div>
           </div>
         ))}
