@@ -8,7 +8,7 @@ import { useProductStore } from "@/contexts/productContext/ProductContext";
 import { useEffect, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Pagination } from "@/components/ui/pagination";
-import { ProductSkeleton } from "@/components/shared/product/ProductSkeleton";
+import { ProductSkeleton } from "@/components/Skeleton";
 
 export default function ViewProductsPage() {
   const { products, loading, fetchProducts, filters, setFilters, pagination } = useProductStore();

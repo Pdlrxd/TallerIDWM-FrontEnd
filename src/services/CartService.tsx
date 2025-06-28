@@ -23,4 +23,10 @@ export const CartService = {
       throw error;
     }
   },
+  async getCart(token: string) {
+    const res = await ApiBackend.get("cart/cart", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+  },
 };

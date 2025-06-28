@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/userAuth";
 import { RegisterForm, registerSchema } from "@/components/forms/RegisterForm";
 import toast from "react-hot-toast";
 import { z } from "zod";

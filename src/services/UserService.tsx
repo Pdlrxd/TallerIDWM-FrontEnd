@@ -44,11 +44,25 @@ export class UserService {
                 headers: { Authorization: `Bearer ${token}` },
             });
             return response.data;
-        } catch (error) {
-            console.error("Error actualizando perfil:", error);
-            return { success: false, message: "Error al actualizar perfil" };
+        } catch (error: any) {
+
+            // Si el backend respondió con un JSON conocido, lo devolvemos limpio
+            if (error.response?.data) {
+                return error.response.data;
+            }
+
+            // Si no, enviamos error genérico
+            return {
+                success: false,
+                message: "Error al actualizar perfil",
+                data: null,
+                errors: null,
+                token: null,
+            };
         }
     }
+
+
 
     static async register(data: any): Promise<ResponseAPI> {
         try {
