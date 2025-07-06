@@ -1,0 +1,26 @@
+# Ignorar build y dependencias
+.next
+node_modules
+out
+dist
+
+# Archivos de lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Archivos de configuración que no deben formatearse
+*.log
+*.md
+
+# Imágenes y recursos estáticos
+public/**/*.svg
+public/**/*.jpg
+public/**/*.jpeg
+public/**/*.png
+public/**/*.gif
+public/**/*.webp
+public/**/*.ico
+
+# Otros
+coverage
