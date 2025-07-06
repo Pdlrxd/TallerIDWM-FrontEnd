@@ -1,5 +1,12 @@
-import ViewAdminUserList from "@/views/adminPage/listUserView/ViewAdminUserList";
+"use client";
 
-export default function UsersPage() {
-    return <ViewAdminUserList />;
+import { AuthGuardAdmin } from "@/components/AuthGuardAdmin";
+import ViewAdminProductList from "@/views/adminPage/listProductView/ViewAdminProductList";
+
+export default function Page() {
+    return (
+        <AuthGuardAdmin>
+            <ViewAdminProductList />
+        </AuthGuardAdmin>
+    );
 }

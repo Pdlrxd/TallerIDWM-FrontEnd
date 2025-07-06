@@ -12,31 +12,33 @@ const ApiBackend = axios.create({
   httpsAgent: isLocalhost ? new https.Agent({ rejectUnauthorized: false }) : undefined,
 });
 
-// Interceptor para añadir token a todas las peticiones
-ApiBackend.interceptors.request.use(config => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers = config.headers || {};
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-ApiBackend.interceptors.response.use(
-  response => response,
-  error => {
-    if (error.response) {
-      const { status } = error.response;
-      if (status === 401 || status === 403) {
-        localStorage.removeItem("token");
-        window.location.href = "/login";
-      }
-      if (status >= 500) {
-        alert("Error del servidor. Intente más tarde.");
-      }
+// Solo registrar interceptor en cliente (navegador)
+if (typeof window !== "undefined") {
+  ApiBackend.interceptors.request.use(config => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers = config.headers || {};
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    return Promise.reject(error);
-  }
-);
+    return config;
+  });
+
+  ApiBackend.interceptors.response.use(
+    response => response,
+    error => {
+      if (error.response) {
+        const { status } = error.response;
+        if (status === 401 || status === 403) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+        }
+        if (status >= 500) {
+          alert("Error del servidor. Intente más tarde.");
+        }
+      }
+      return Promise.reject(error);
+    }
+  );
+}
 
 export { ApiBackend };
