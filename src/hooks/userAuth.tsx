@@ -6,7 +6,7 @@ import { UserService } from "@/services/UserService";
 import { User } from "@/interfaces/User";
 
 export const useAuth = () => {
-    const { auth, logout, user, status } = useContext(AuthContext);  // <-- agrego status
+    const { auth, logout, user, status } = useContext(AuthContext);
     const router = useRouter();
 
     const login = async (email: string, password: string) => {
@@ -34,7 +34,7 @@ export const useAuth = () => {
 
             auth(user);
 
-            router.push(payload.role === "Admin" ? "/admin" : "/products");
+            router.push(payload.role === "Admin" ? "/admin" : "/");
 
 
             return { success: true };
@@ -65,7 +65,7 @@ export const useAuth = () => {
 
     return {
         user,
-        status,   // <-- expongo status
+        status,
         login,
         register,
         logout: logoutUser,

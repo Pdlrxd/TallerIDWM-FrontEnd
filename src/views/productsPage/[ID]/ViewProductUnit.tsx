@@ -3,7 +3,7 @@ import { ProductServices } from "@/services/ProductService";
 import { Navbar } from "@/components/Navbar";
 import { BackButton } from "@/components/BackButton";
 import ProductDetail from "../../../components/shared/product/ProductDetail";
-import { AddToCartButton } from "@/components/shared/cartL/AddToCartButton"; // <-- Importa aquí
+import { AddToCartButton } from "@/components/shared/cartL/AddToCartButton";
 
 interface ProductPageProps {
   params: {

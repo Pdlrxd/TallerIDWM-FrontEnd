@@ -10,13 +10,13 @@ interface Props {
 }
 
 export function AuthGuardAdmin({ children }: Props) {
-  const { user, status } = useAuth();  // <-- agrego status
+  const { user, status } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     console.log("AuthGuardAdmin - status:", status);
     console.log("AuthGuardAdmin - user:", user);
-    if (status === "checking") return; // Espera hasta que termine de chequear
+    if (status === "checking") return;
 
     if (status === "non-authenticated") {
       router.push("/login");

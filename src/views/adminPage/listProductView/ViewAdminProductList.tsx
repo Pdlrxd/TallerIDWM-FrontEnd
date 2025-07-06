@@ -34,7 +34,7 @@ const ViewAdminProductList = () => {
 
     const handleFilterChange = (updatedFilters: ProductFiltersAdmin) => {
         setFilters(updatedFilters);
-        setCurrentPage(1); // resetear a página 1 al cambiar filtro
+        setCurrentPage(1);
     };
 
     return (

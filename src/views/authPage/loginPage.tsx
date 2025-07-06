@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "@/hooks/userAuth";  // Ojo, tenías mal escrito: "userAuth"
+import { useAuth } from "@/hooks/userAuth";
 import { Button } from "@/components/ui/Button";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";

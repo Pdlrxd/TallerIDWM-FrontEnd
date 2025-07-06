@@ -7,7 +7,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <AuthProvider>
       <CartProvider>
         {children}
-        {/* <Toaster /> aquí se elimina */}
+        {}
       </CartProvider>
     </AuthProvider>
   );

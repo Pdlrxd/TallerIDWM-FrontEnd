@@ -22,9 +22,9 @@ const ViewAdminUserList = () => {
         try {
             const filtersWithPage = {
                 PageNumber: currentPage,
-                PageSize: 20, // o el tamaño que uses por defecto
+                PageSize: 20,
                 Status: filters.status,
-                SearchTerm: filters.name,           // <-- aquí cambias name por SearchTerm
+                SearchTerm: filters.name,
                 RegistrationDateFrom: filters.startDate,
                 RegistrationDateTo: filters.endDate,
             };

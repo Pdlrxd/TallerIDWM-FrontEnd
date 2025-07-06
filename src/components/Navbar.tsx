@@ -8,7 +8,7 @@ import { Button } from "./ui/Button";
 import { AuthContext } from "@/contexts/auth/AuthContext";
 
 interface NavbarProps {
-  activePage?: string; // prop opcional
+  activePage?: string;
 }
 
 export const Navbar = ({ activePage }: NavbarProps) => {
@@ -55,7 +55,6 @@ export const Navbar = ({ activePage }: NavbarProps) => {
   const baseLinkStyle =
     "font-bold text-sm uppercase cursor-pointer font-[Arial Black],Arial,sans-serif";
 
-  // Si recibimos activePage desde prop, lo usamos, sino usamos pathname real
   const currentPath = activePage ?? pathname;
 
   const isActive = (path: string) => {

@@ -7,8 +7,8 @@ import { useAuth } from "@/hooks/userAuth";
 export type CreateProductForm = {
     title: string;
     description: string;
-    price: string;  // CAMBIO aquí de number a string
-    stock: string;  // CAMBIO aquí de number a string
+    price: string;
+    stock: string;
     category: string;
     brand: string;
     condition: string;
@@ -23,8 +23,8 @@ export function useAdmin() {
     const [createProductForm, setCreateProductForm] = useState<CreateProductForm>({
         title: "",
         description: "",
-        price: "",  // CAMBIO aquí a string vacio
-        stock: "",  // CAMBIO aquí a string vacio
+        price: "",
+        stock: "",
         category: "",
         brand: "",
         condition: "",
@@ -61,8 +61,8 @@ export function useAdmin() {
             setCreateProductForm({
                 title: "",
                 description: "",
-                price: "",   // reseteo a string vacio
-                stock: "",   // reseteo a string vacio
+                price: "",
+                stock: "",
                 category: "",
                 brand: "",
                 condition: "",

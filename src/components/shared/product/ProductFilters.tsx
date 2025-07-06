@@ -13,7 +13,7 @@ interface ProductFiltersProps {
   onApplyFilters: () => void;
 }
 
-const conditions = ["", "Nuevo", "Usado", "Reacondicionado"]; // "" para opción vacía
+const conditions = ["", "Nuevo", "Usado", "Reacondicionado"];
 
 const sortOptions = [
   { label: "Por defecto", value: "" },

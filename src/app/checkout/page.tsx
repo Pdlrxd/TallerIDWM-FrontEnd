@@ -18,15 +18,13 @@ export default function CheckoutPage() {
 
     const [step, setStep] = useState(1);
 
-    // Ahora acepta funciones que retornan Promise<string | boolean>
     const nextStep = async (confirmFn: () => Promise<string | boolean>) => {
         const result = await confirmFn();
         if (result === true) {
             setStep((s) => s + 1);
         } else {
-            // Aquí puedes manejar el mensaje de error si es string
             if (typeof result === "string") {
-                alert(result); // O mostrar el error con un toast, etc.
+                alert(result);
             }
         }
     };

@@ -31,7 +31,7 @@ export const AdminService = {
             if (!response.data.success) {
                 throw new Error(response.data.message || "Error al obtener usuarios");
             }
-            return response.data.data; // { data: User[], pagination: Pagination }
+            return response.data.data;
         } catch (error: any) {
             throw new Error(error.response?.data?.message || "Error en la solicitud");
         }
