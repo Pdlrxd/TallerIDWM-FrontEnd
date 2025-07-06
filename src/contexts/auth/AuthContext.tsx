@@ -57,6 +57,7 @@ export const AuthProvider = ({ children }: Props) => {
             if (response.success) {
                 const userData = response.data as User;
                 userData.token = token;
+                userData.role = payload.role; // <-- aseguramos que el role venga del token
                 dispatch({ type: 'auth', payload: { user: userData } });
             } else {
                 localStorage.removeItem('token');
@@ -67,6 +68,7 @@ export const AuthProvider = ({ children }: Props) => {
             dispatch({ type: 'non-authenticated' });
         });
     }, []);
+
 
     const auth = (user: User) => {
         localStorage.setItem('token', user.token);

@@ -6,7 +6,7 @@ import { UserService } from "@/services/UserService";
 import { User } from "@/interfaces/User";
 
 export const useAuth = () => {
-    const { auth, logout } = useContext(AuthContext);
+    const { auth, logout, user, status } = useContext(AuthContext);  // <-- agrego status
     const router = useRouter();
 
     const login = async (email: string, password: string) => {
@@ -34,10 +34,10 @@ export const useAuth = () => {
 
             auth(user);
 
-            router.push(payload.role === "Admin" ? "/admin" : "/");
+            router.push(payload.role === "Admin" ? "/admin" : "/products");
+
 
             return { success: true };
-
         } catch (error: any) {
             const message = error?.message || "Error al iniciar sesión. Intente nuevamente";
             return { error: message };
@@ -64,8 +64,10 @@ export const useAuth = () => {
     };
 
     return {
+        user,
+        status,   // <-- expongo status
         login,
-        register,  // <--- Incluido en el retorno
+        register,
         logout: logoutUser,
     };
 };

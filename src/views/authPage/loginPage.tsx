@@ -1,18 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "@/hooks/userAuth";
-import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/userAuth";  // Ojo, tenías mal escrito: "userAuth"
 import { Button } from "@/components/ui/Button";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
-
-import { LoginForm } from "@/components/forms/LoginForm"; // Ajusta ruta si es necesario
+import { LoginForm } from "@/components/forms/LoginForm";
 
 export const LoginPage = () => {
   const { login } = useAuth();
-  const router = useRouter();
-
   const [error, setError] = useState<string | null>(null);
 
   const handleLogin = async (values: { email: string; password: string }) => {
@@ -20,9 +16,7 @@ export const LoginPage = () => {
     const result = await login(values.email, values.password);
     if (result.error) {
       setError(result.error);
-      return;
     }
-    router.push("/"); // Redirige a la página que quieras
   };
 
   return (
@@ -34,8 +28,7 @@ export const LoginPage = () => {
         <p className="text-xl md:text-2xl text-center max-w-lg">
           La mejor plataforma para encontrar tus productos favoritos.
         </p>
-
-        <Button variant={"outline"} className="mt-4 text-blue-600" onClick={() => router.push("/")}>
+        <Button variant={"outline"} className="mt-4 text-blue-600" onClick={() => window.location.href = "/"}>
           <ArrowLeftIcon /> Inicio
         </Button>
       </div>
