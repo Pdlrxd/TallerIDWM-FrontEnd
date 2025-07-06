@@ -16,4 +16,24 @@ export const AdminService = {
             );
         }
     },
+    fetchUsers: async (filters: {
+        name?: string;
+        status?: boolean;
+        startDate?: string;
+        endDate?: string;
+        pageNumber: number;
+        pageSize: number;
+    }) => {
+        try {
+            const response = await ApiBackend.get("/AdminUser", {
+                params: filters,
+            });
+            if (!response.data.success) {
+                throw new Error(response.data.message || "Error al obtener usuarios");
+            }
+            return response.data.data; // { data: User[], pagination: Pagination }
+        } catch (error: any) {
+            throw new Error(error.response?.data?.message || "Error en la solicitud");
+        }
+    },
 };
