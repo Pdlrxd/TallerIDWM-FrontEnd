@@ -7,4 +7,5 @@ export default function AdminPage() {
       <ViewAdminPage />
     </AuthGuardAdmin>
   );
+  
 }
