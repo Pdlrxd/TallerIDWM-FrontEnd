@@ -1,34 +1,34 @@
-import { Product } from '../../interfaces/Product';
-import Image from 'next/image';
-import { Button } from "@/components/ui/Button";
+import { Product } from "@/interfaces/Product";
+import Image from "next/image";
 
-interface ProductCardProps {
+interface Props {
     product: Product;
-    onClick?: () => void;
 }
-export const ProductCard = ({ product, onClick }: ProductCardProps) => {
+
+const ProductCard = ({ product }: Props) => {
     return (
-        <div
-            className="bg-white shadow-md rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition flex flex-col"
-            onClick={onClick}
-            style={{ width: "100%" }}
-        >
-            <div className="relative w-full h-48 bg-gray-200 flex items-center justify-center">
+        <div className="border rounded-lg shadow p-4 flex flex-col bg-white">
+            {product.imageUrls?.[0] ? (
                 <Image
-                    src={product.imageUrls[0] ?? "/Producto.jpg"}
+                    src={product.imageUrls[0]}
                     alt={product.title}
-                    width={200}
+                    width={300}
                     height={200}
-                    className="object-contain"
+                    className="object-cover w-full h-40 mb-2 rounded"
                 />
-            </div>
-            <div className="p-4 flex flex-col flex-grow min-h-[180px]">
-                <h3 className="font-semibold text-lg truncate">{product.title}</h3>
-                <p className="mt-2 text-blue-700 font-bold text-xl">${product.price.toFixed(2)}</p>
-                <div className="mt-auto">
-                    <Button className="w-full">Mas Detalles</Button>
+            ) : (
+                <div className="w-full h-40 bg-gray-200 flex items-center justify-center mb-2 rounded">
+                    <span>Sin imagen</span>
                 </div>
-            </div>
+            )}
+
+            <h2 className="font-bold text-lg">{product.title}</h2>
+            <p className="text-gray-700 text-sm mb-2">{product.category} - {product.brand}</p>
+            <p className="font-semibold text-green-600">${product.price.toFixed(2)}</p>
+            <p className="text-sm text-gray-500">Stock: {product.stock}</p>
+            <p className="text-sm text-gray-500">Estado: {product.condition}</p>
         </div>
     );
 };
+
+export default ProductCard;

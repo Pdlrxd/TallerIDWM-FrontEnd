@@ -1,36 +1,14 @@
-import { ApiBackend } from "@/clients/axios";
+import { ApiBackend } from "@/services/axios";
 import { Product } from "@/interfaces/Product";
+import { ProductFilters } from "@/interfaces/ProductFilters";
+import { ProductResponseData } from "@/interfaces/ProductResponseData";
 import { ResponseAPI } from "@/interfaces/ResponseAPI";
-
-export interface ProductFilters {
-    pageNumber: number;
-    pageSize: number;
-    category?: string;
-    brand?: string;
-    condition?: string;
-    minPrice?: number;
-    maxPrice?: number;
-    sort?: string;
-}
-
-
-export interface Pagination {
-    totalCount: number;
-    pageSize: number;
-    currentPage: number;
-    totalPages: number;
-}
-
-export interface ProductResponseData {
-    data: Product[];
-    pagination: Pagination;
-}
+import { ProductFiltersAdmin } from "@/interfaces/ProductFiltersAdmin";
 
 export const ProductServices = {
-
     async fetchProducts(filters: ProductFilters): Promise<ProductResponseData> {
         const { data } = await ApiBackend.get<ResponseAPI>("product/filter-public", {
-            params: filters
+            params: filters,
         });
 
         if (!data.success) throw new Error(data.message || "Error al obtener los productos");
@@ -44,7 +22,18 @@ export const ProductServices = {
         if (!data) throw new Error("Producto no encontrado");
 
         return data;
+    },
+    async fetchAdminProducts(filters: ProductFiltersAdmin): Promise<ProductResponseData> {
+        console.log("Enviando filtros a backend:", filters);
+        const { data } = await ApiBackend.get<ResponseAPI>("product/filter", {
+            params: filters,
+        });
+
+        if (!data.success) throw new Error(data.message || "Error al obtener los productos de admin");
+
+        return data.data;
     }
 
-
 };
+export type { ProductFilters };
+

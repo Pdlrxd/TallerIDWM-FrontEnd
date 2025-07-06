@@ -1,8 +1,9 @@
 export interface User {
     firstName?:        string;
     lastName?:         string;
-    email:            string;
+    email:             string;
     phone?:            string;
+    birthDate?:        string;
     street?:           string;
     number?:           string;
     commune?:          string;
@@ -11,6 +12,6 @@ export interface User {
     registrationDate?: Date;
     lastLogin?:        null;
     status?:           boolean;
-    token:            string;
+    token:             string;
     role?:             string;
 }

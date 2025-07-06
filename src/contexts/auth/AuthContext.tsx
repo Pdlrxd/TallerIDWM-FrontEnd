@@ -3,18 +3,25 @@
 import { User } from "@/interfaces/User";
 import { authReducer, AuthState } from "./AuthReducer";
 import { createContext, useReducer, useEffect } from "react";
+import { UserService } from "@/services/UserService";
 
 type AuthContextProps = {
     user: User | null;
+    token?: string | null;
     status: 'authenticated' | 'non-authenticated' | 'checking';
     auth: (user: User) => void;
     logout: () => void;
     updateUser: (user: User) => void;
 }
 
+
 const authInitialState: AuthState = {
     status: 'checking',
     user: null
+}
+
+interface Props {
+    children: React.ReactNode;
 }
 
 export const AuthContext = createContext({} as AuthContextProps);
@@ -29,7 +36,7 @@ const parseJwt = (token: string) => {
     }
 }
 
-export const AuthProvider = ({ children }: any) => {
+export const AuthProvider = ({ children }: Props) => {
     const [state, dispatch] = useReducer(authReducer, authInitialState);
 
     useEffect(() => {
@@ -46,18 +53,22 @@ export const AuthProvider = ({ children }: any) => {
             return;
         }
 
-        // Opcional: validar expiración token aquí
-
-        const user: User = {
-            firstName: payload.given_name || '',
-            lastName: payload.family_name || '',
-            email: payload.email,
-            role: payload.role,
-            token: token
-        };
-
-        dispatch({ type: 'auth', payload: { user } });
+        UserService.getProfile(token).then(response => {
+            if (response.success) {
+                const userData = response.data as User;
+                userData.token = token;
+                userData.role = payload.role;
+                dispatch({ type: 'auth', payload: { user: userData } });
+            } else {
+                localStorage.removeItem('token');
+                dispatch({ type: 'non-authenticated' });
+            }
+        }).catch(() => {
+            localStorage.removeItem('token');
+            dispatch({ type: 'non-authenticated' });
+        });
     }, []);
+
 
     const auth = (user: User) => {
         localStorage.setItem('token', user.token);
@@ -77,12 +88,14 @@ export const AuthProvider = ({ children }: any) => {
         <AuthContext.Provider
             value={{
                 ...state,
+                token: state.user?.token ?? null,
                 logout,
                 auth,
-                updateUser
+                updateUser,
             }}
         >
             {children}
         </AuthContext.Provider>
     );
+
 }
