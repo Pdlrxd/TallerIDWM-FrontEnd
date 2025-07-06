@@ -7,10 +7,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <AuthProvider>
       <CartProvider>
         {children}
-        <Toaster
-          position="bottom-right"
-          toastOptions={{ duration: 4000, style: { fontWeight: "600" } }}
-        />
+        {}
       </CartProvider>
     </AuthProvider>
   );

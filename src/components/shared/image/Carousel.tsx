@@ -11,7 +11,6 @@ interface Props {
 export default function Carousel({ images, alt }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Si no hay imágenes, mostramos la imagen default
   if (!images || images.length === 0) {
     return (
       <div className="relative w-full max-w-lg mx-auto">

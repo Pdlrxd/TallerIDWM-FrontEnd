@@ -41,7 +41,7 @@ export function RemoveFromCartButton({ productId }: Props) {
             setLoading(true);
             await CartService.removeFromCart(productId, token);
             toast.success("Producto eliminado del carrito");
-            await fetchCart(); // Espera a que se recargue el carrito
+            await fetchCart();
         } catch (error) {
             console.error("Error al eliminar del carrito", error);
             toast.error("Error al eliminar del carrito");

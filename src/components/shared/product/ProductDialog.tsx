@@ -18,7 +18,7 @@ export const ProductDialog = ({ product, open, onClose }: ProductDialogProps) =>
     if (!product) return null;
 
     const goToProductDetail = () => {
-        onClose(); // cerrar dialog
+        onClose();
         router.push(`/products/${product.id}`);
     };
 

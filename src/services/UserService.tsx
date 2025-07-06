@@ -1,5 +1,7 @@
 import { ApiBackend } from "@/services/axios";
 import { ResponseAPI } from "@/interfaces/ResponseAPI";
+import { UserFiltersAdmin } from "@/interfaces/UserFiltersAdmin";
+import { UserResponseData } from "@/interfaces/UserResponseData";
 
 export class UserService {
     static async login(email: string, password: string): Promise<ResponseAPI> {
@@ -46,12 +48,10 @@ export class UserService {
             return response.data;
         } catch (error: any) {
 
-            // Si el backend respondió con un JSON conocido, lo devolvemos limpio
             if (error.response?.data) {
                 return error.response.data;
             }
 
-            // Si no, enviamos error genérico
             return {
                 success: false,
                 message: "Error al actualizar perfil",
@@ -85,4 +85,21 @@ export class UserService {
             };
         }
     }
+    static async fetchAdminUsers(filters: any): Promise<any> {
+        const token = localStorage.getItem("token");
+
+        try {
+            const response = await ApiBackend.get("/AdminUser", {
+                params: filters,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data.data;
+        } catch (error: any) {
+            console.error("Error al obtener usuarios:", error);
+            throw new Error("No se pudieron obtener los usuarios");
+        }
+    }
+
 }

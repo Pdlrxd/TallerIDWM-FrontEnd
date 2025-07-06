@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
-import { Navbar } from "@/components/Navbar"; // ajusta la ruta si es necesario
+import { Navbar } from "@/components/Navbar";
 
 export default function SuccessPage() {
     return (

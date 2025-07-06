@@ -1,14 +1,14 @@
 "use client";
 
 import { ViewCartProductContent } from "@/views/cartPage/ViewCartProductContent";
-import { AuthGuard } from "@/components/AuthGuard";
+import { AuthGuardAdmin } from "@/components/AuthGuardAdmin";
 
 export default function CartPage() {
     return (
-        <AuthGuard>
+        <AuthGuardAdmin>
             <main className="min-h-screen bg-gray-50 py-10">
                 <ViewCartProductContent />
             </main>
-        </AuthGuard>
+        </AuthGuardAdmin>
     );
 }

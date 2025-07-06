@@ -15,7 +15,7 @@ interface AddToCartButtonProps {
 }
 
 export function AddToCartButton({ productId, quantity, stock }: AddToCartButtonProps) {
-  const { cartItems, fetchCart } = useCart(); // Traemos fetchCart
+  const { cartItems, fetchCart } = useCart();
   const router = useRouter();
   const { status } = useContext(AuthContext);
   const [token, setToken] = useState<string>("");
@@ -49,7 +49,7 @@ export function AddToCartButton({ productId, quantity, stock }: AddToCartButtonP
     try {
       await CartService.addToCart(productId, quantity, token);
       toast.success("Producto agregado al carrito");
-      await fetchCart(); // Actualizamos el carrito tras la operación
+      await fetchCart();
     } catch (error) {
       console.error("Error al agregar al carrito", error);
       toast.error("Error al agregar al carrito");

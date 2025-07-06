@@ -12,4 +12,23 @@ const ApiBackend = axios.create({
   httpsAgent: isLocalhost ? new https.Agent({ rejectUnauthorized: false }) : undefined,
 });
 
+ApiBackend.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response) {
+      const { status } = error.response;
+      if (status === 401 || status === 403) {
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+      }
+      if (status >= 500) {
+        alert("Error del servidor. Intente más tarde.");
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+
+
 export { ApiBackend };

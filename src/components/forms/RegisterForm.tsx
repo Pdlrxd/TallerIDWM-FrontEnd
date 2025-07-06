@@ -19,19 +19,15 @@ export const registerSchema = z
             if (isNaN(d.getTime())) return false;
 
             const today = new Date();
-            // Normalizamos ambas fechas al inicio del día
             d.setHours(0, 0, 0, 0);
             today.setHours(0, 0, 0, 0);
 
-            // Fecha no puede ser futura
             if (d > today) return false;
 
-            // Cálculo de edad
             const age = today.getFullYear() - d.getFullYear();
             const monthDiff = today.getMonth() - d.getMonth();
             const dayDiff = today.getDate() - d.getDate();
 
-            // Debe tener 18 años o más
             return !(age < 18 || (age === 18 && (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0))));
         }, { message: "Debe ser mayor de 18 años y la fecha no puede ser en el futuro." }),
 
