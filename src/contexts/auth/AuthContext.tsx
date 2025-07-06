@@ -7,11 +7,13 @@ import { UserService } from "@/services/UserService";
 
 type AuthContextProps = {
     user: User | null;
+    token?: string | null;       // <-- agregar aquí
     status: 'authenticated' | 'non-authenticated' | 'checking';
     auth: (user: User) => void;
     logout: () => void;
     updateUser: (user: User) => void;
 }
+
 
 const authInitialState: AuthState = {
     status: 'checking',
@@ -84,13 +86,14 @@ export const AuthProvider = ({ children }: Props) => {
         <AuthContext.Provider
             value={{
                 ...state,
+                token: state.user?.token ?? null,   // <-- aquí
                 logout,
                 auth,
                 updateUser,
-                // refreshToken ya no está disponible
             }}
         >
             {children}
         </AuthContext.Provider>
     );
+
 }

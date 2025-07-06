@@ -1,15 +1,9 @@
 import { ApiBackend } from "./axios";
-
-interface ShippingAddress {
-    Street: string;
-    Number: string;
-    Commune: string;
-    Region: string;
-    PostalCode: string;
-}
+import { Address } from "@/interfaces/Address";
 
 export const OrderService = {
-    async confirmAddress(address: ShippingAddress, token: string) {
+
+    async confirmAddress(address: Address, token: string) {
         return ApiBackend.post("order/checkout/address", address, {
             headers: { Authorization: `Bearer ${token}` },
         });
@@ -25,10 +19,13 @@ export const OrderService = {
         );
     },
 
-    async confirmOrder(paymentMethod: string, address: ShippingAddress, token: string) {
+    async confirmOrder(paymentMethod: string, address: Address, token: string) {
         return ApiBackend.post(
             "order/checkout/confirm",
-            { PaymentMethod: paymentMethod, ShippingAddress: address },
+            {
+                PaymentMethod: paymentMethod,
+                ShippingAddress: address,
+            },
             {
                 headers: { Authorization: `Bearer ${token}` },
             }

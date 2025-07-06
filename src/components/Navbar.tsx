@@ -27,6 +27,11 @@ export const Navbar = ({ activePage }: NavbarProps) => {
     router.push("/profile");
   };
 
+  const goToOrders = () => {
+    setProfileMenuOpen(false);
+    router.push("/orders");
+  };
+
   const handleLogout = () => {
     logout();
     setProfileMenuOpen(false);
@@ -126,6 +131,15 @@ export const Navbar = ({ activePage }: NavbarProps) => {
                   >
                     Ver Perfil
                   </Button>
+
+                  <Button
+                    onClick={goToOrders}
+                    className="px-6 py-3 hover:bg-gray-800 cursor-pointer text-left text-base text-center rounded-md"
+                    type="button"
+                  >
+                    Mis Pedidos
+                  </Button>
+
                   <Button
                     onClick={handleLogout}
                     className="mt-1 px-6 py-3 hover:bg-gray-800 cursor-pointer text-left text-base text-center rounded-md"
