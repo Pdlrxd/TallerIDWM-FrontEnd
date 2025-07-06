@@ -1,4 +1,4 @@
-import { ApiBackend } from "./axios"; // o donde tengas el cliente axios configurado
+import { ApiBackend } from "./axios";
 
 export const CartService = {
   addToCart: async (productId: number, quantity: number, token: string) => {

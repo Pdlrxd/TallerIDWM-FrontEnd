@@ -32,7 +32,7 @@ export async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <>
-      <Navbar />
+      <Navbar activePage ="/cart" />
       <div className="min-h-screen bg-gray-900 p-6">
         <main className="max-w-5xl mx-auto bg-white rounded-lg shadow-md p-8 relative">
           <div className="absolute top-6 left-6">
