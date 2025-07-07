@@ -67,18 +67,32 @@ export const Navbar = ({ activePage }: NavbarProps) => {
   const activeClass = "bg-white text-black rounded-md px-4 py-2";
   const inactiveClass = "text-gray-300 hover:text-white transition";
 
-  const links = [
-    { label: "Inicio", href: "/" },
-    { label: "Productos", href: "/product" },
-    { label: "Servicios", href: "/services" },
-  ];
+  // Define links dinámicamente según rol del usuario
+  const links = [];
+
+  // Botón Inicio, según rol del usuario
+  if (user?.role === "Admin") {
+    links.push({ label: "Inicio", href: "/admin" });
+  } else {
+    links.push({ label: "Inicio", href: "/" });
+  }
+
+  // **Botones Productos y Servicios eliminados para usuarios no admin**
 
   return (
     <nav className="bg-black text-white relative">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
+        {/* Izquierda: Logo */}
         <div className="font-bold text-2xl cursor-pointer hover:text-gray-400 transition">
-          <Link href="/">BLACKCAT</Link>
+          <Link href={user?.role === "Admin" ? "/admin" : "/"}>BLACKCAT</Link>
         </div>
+
+        {/* Centro: Texto ADMINISTRADOR solo para admin */}
+        {user?.role === "Admin" && (
+          <div className="absolute left-1/2 transform -translate-x-1/2 font-extrabold text-lg uppercase tracking-widest">
+            ADMINISTRADOR
+          </div>
+        )}
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-6 items-center">
@@ -94,18 +108,20 @@ export const Navbar = ({ activePage }: NavbarProps) => {
             </li>
           ))}
 
-          {/* Carrito con ícono */}
-          <li>
-            <button
-              onClick={() => router.push("/cart")}
-              className={`${baseLinkStyle} ${isActive("/cart") ? activeClass : inactiveClass
-                } flex items-center gap-1`}
-              aria-label="Carrito"
-              type="button"
-            >
-              <ShoppingCart size={18} />
-            </button>
-          </li>
+          {/* Mostrar carrito solo si NO es admin */}
+          {user?.role !== "Admin" && (
+            <li>
+              <button
+                onClick={() => router.push("/cart")}
+                className={`${baseLinkStyle} ${isActive("/cart") ? activeClass : inactiveClass
+                  } flex items-center gap-1`}
+                aria-label="Carrito"
+                type="button"
+              >
+                <ShoppingCart size={18} />
+              </button>
+            </li>
+          )}
 
           {status === "authenticated" && user ? (
             <div className="relative" ref={profileMenuRef}>
@@ -131,13 +147,16 @@ export const Navbar = ({ activePage }: NavbarProps) => {
                     Ver Perfil
                   </Button>
 
-                  <Button
-                    onClick={goToOrders}
-                    className="px-6 py-3 hover:bg-gray-800 cursor-pointer text-left text-base text-center rounded-md"
-                    type="button"
-                  >
-                    Mis Pedidos
-                  </Button>
+                  {/* Mostrar 'Mis Pedidos' solo si NO es admin */}
+                  {user.role !== "Admin" && (
+                    <Button
+                      onClick={goToOrders}
+                      className="px-6 py-3 hover:bg-gray-800 cursor-pointer text-left text-base text-center rounded-md"
+                      type="button"
+                    >
+                      Mis Pedidos
+                    </Button>
+                  )}
 
                   <Button
                     onClick={handleLogout}
@@ -184,18 +203,20 @@ export const Navbar = ({ activePage }: NavbarProps) => {
             </Link>
           ))}
 
-          {/* Carrito móvil */}
-          <button
-            onClick={() => {
-              router.push("/cart");
-              toggleMenu();
-            }}
-            className={`${baseLinkStyle} ${isActive("/cart") ? activeClass : inactiveClass
-              } flex items-center gap-1`}
-            type="button"
-          >
-            <ShoppingCart size={18} />
-          </button>
+          {/* Mostrar carrito móvil solo si no es admin */}
+          {user?.role !== "Admin" && (
+            <button
+              onClick={() => {
+                router.push("/cart");
+                toggleMenu();
+              }}
+              className={`${baseLinkStyle} ${isActive("/cart") ? activeClass : inactiveClass
+                } flex items-center gap-1`}
+              type="button"
+            >
+              <ShoppingCart size={18} />
+            </button>
+          )}
 
           {status === "authenticated" && user ? (
             <div className="flex flex-col items-center space-y-2">
@@ -209,6 +230,8 @@ export const Navbar = ({ activePage }: NavbarProps) => {
               >
                 {user.firstName?.split(" ")[0].toUpperCase() || ""}
               </Button>
+
+              {/* Cerrar sesión botón */}
               <Button
                 onClick={() => {
                   handleLogout();

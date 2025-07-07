@@ -1,18 +1,20 @@
+// Este archivo es /products/[id]/page.tsx (o similar)
+
 import { Product } from "@/interfaces/Product";
 import { ProductServices } from "@/services/ProductService";
 import { Navbar } from "@/components/Navbar";
 import { BackButton } from "@/components/BackButton";
-import ProductDetail from "../../../components/shared/product/ProductDetail";
-import { AddToCartButton } from "@/components/shared/cartL/AddToCartButton";
+import ProductDetail from "@/components/shared/product/ProductDetail";
 
 interface ProductPageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }> | { id: string };
 }
 
-export async function ProductPage({ params }: ProductPageProps) {
-  const id = Number(params.id);
+export default async function ProductUnitPage({ params }: ProductPageProps) {
+  const awaitedParams = await params;
+  const id = Number(awaitedParams.id);
+
+  console.log("ID recibido en ProductUnitPage:", id);
 
   if (isNaN(id)) {
     return <div className="p-8 text-center text-red-600">ID inválido.</div>;
@@ -22,7 +24,9 @@ export async function ProductPage({ params }: ProductPageProps) {
 
   try {
     product = await ProductServices.getProductById(id);
+    console.log("Producto recibido en ProductUnitPage:", product);
   } catch (error) {
+    console.error("Error al obtener producto:", error);
     return <div className="p-8 text-center text-red-600">Producto no encontrado.</div>;
   }
 
@@ -32,7 +36,7 @@ export async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <>
-      <Navbar activePage ="/cart" />
+      <Navbar activePage="/cart" />
       <div className="min-h-screen bg-gray-900 p-6">
         <main className="max-w-5xl mx-auto bg-white rounded-lg shadow-md p-8 relative">
           <div className="absolute top-6 left-6">
@@ -41,7 +45,7 @@ export async function ProductPage({ params }: ProductPageProps) {
 
           <ProductDetail product={product} />
 
-          {/* Botón para agregar al carrito */}
+          {/* Aquí puedes agregar el botón de agregar al carrito */}
         </main>
       </div>
     </>

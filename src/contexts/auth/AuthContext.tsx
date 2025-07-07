@@ -42,32 +42,38 @@ export const AuthProvider = ({ children }: Props) => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
+            console.log("No token found in localStorage");
             dispatch({ type: 'non-authenticated' });
             return;
         }
 
         const payload = parseJwt(token);
         if (!payload) {
+            console.log("Invalid token payload");
             localStorage.removeItem('token');
             dispatch({ type: 'non-authenticated' });
             return;
         }
 
         UserService.getProfile(token).then(response => {
+            console.log("getProfile response:", response);
             if (response.success) {
                 const userData = response.data as User;
                 userData.token = token;
                 userData.role = payload.role;
                 dispatch({ type: 'auth', payload: { user: userData } });
             } else {
+                console.log("getProfile failed, removing token");
                 localStorage.removeItem('token');
                 dispatch({ type: 'non-authenticated' });
             }
-        }).catch(() => {
+        }).catch((error) => {
+            console.log("getProfile error:", error);
             localStorage.removeItem('token');
             dispatch({ type: 'non-authenticated' });
         });
     }, []);
+
 
 
     const auth = (user: User) => {

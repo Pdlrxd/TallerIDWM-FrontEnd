@@ -9,8 +9,6 @@ export const ViewAdminPage = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <Navbar />
-
             <div className="flex flex-grow justify-center items-center bg-white px-10 py-12">
                 <div className="max-w-2xl w-full bg-white rounded-2xl shadow-lg p-8 text-black">
                     <h1 className="text-4xl font-extrabold uppercase mb-8 text-center">

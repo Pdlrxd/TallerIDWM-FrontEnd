@@ -6,8 +6,9 @@ import { HistoryOrderService } from "@/services/HistoryOrderService";
 import { AuthContext } from "@/contexts/auth/AuthContext";
 import { Navbar } from "@/components/Navbar";
 import { OrderDetail } from "@/interfaces/OrderDetail";
+import { AuthGuardClient } from "@/components/AuthGuardClient";
 
-export default function ViewOrderDetailPage() {
+function ViewOrderDetail() {
     const { id } = useParams();
     const router = useRouter();
     const { token } = useContext(AuthContext);
@@ -55,16 +56,28 @@ export default function ViewOrderDetailPage() {
                 <h1 className="text-3xl font-bold mb-6">Detalle del Pedido</h1>
 
                 <section className="mb-6">
-                    <p><strong>Número de Pedido:</strong> {order.orderNumber}</p>
-                    <p><strong>Fecha de Compra:</strong> {formatDate(order.purchaseDate)}</p>
-                    <p><strong>Total:</strong> ${order.total.toFixed(2)}</p>
-                    <p><strong>Estado:</strong> {order.orderStatus}</p>
+                    <p>
+                        <strong>Número de Pedido:</strong> {order.orderNumber}
+                    </p>
+                    <p>
+                        <strong>Fecha de Compra:</strong> {formatDate(order.purchaseDate)}
+                    </p>
+                    <p>
+                        <strong>Total:</strong> ${order.total.toFixed(2)}
+                    </p>
+                    <p>
+                        <strong>Estado:</strong> {order.orderStatus}
+                    </p>
                 </section>
 
                 <section className="mb-6">
                     <h2 className="text-2xl font-semibold mb-2">Dirección de Envío</h2>
-                    <p>{order.shippingAddress.street} #{order.shippingAddress.number}</p>
-                    <p>{order.shippingAddress.commune}, {order.shippingAddress.region}</p>
+                    <p>
+                        {order.shippingAddress.street} #{order.shippingAddress.number}
+                    </p>
+                    <p>
+                        {order.shippingAddress.commune}, {order.shippingAddress.region}
+                    </p>
                     <p>Código Postal: {order.shippingAddress.postalCode}</p>
                 </section>
 
@@ -93,5 +106,13 @@ export default function ViewOrderDetailPage() {
                 </section>
             </main>
         </>
+    );
+}
+
+export default function ViewOrderDetailPage() {
+    return (
+        <AuthGuardClient>
+            <ViewOrderDetail />
+        </AuthGuardClient>
     );
 }

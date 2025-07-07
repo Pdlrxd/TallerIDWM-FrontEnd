@@ -18,11 +18,11 @@ export const ProductServices = {
 
     async getProductById(id: number): Promise<Product> {
         const { data } = await ApiBackend.get<Product>(`product/${id}`);
-
+        console.log("Producto recibido:", data);
         if (!data) throw new Error("Producto no encontrado");
-
         return data;
     },
+
     async fetchAdminProducts(filters: ProductFiltersAdmin): Promise<ProductResponseData> {
         console.log("Enviando filtros a backend:", filters);
         const { data } = await ApiBackend.get<ResponseAPI>("product/filter", {
