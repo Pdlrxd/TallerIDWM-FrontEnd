@@ -1,12 +1,12 @@
 "use client";
 
 import { AuthGuardAdmin } from "@/components/AuthGuardAdmin";
-import ViewAdminProductList from "@/views/adminPage/listProductView/ViewAdminProductList";
+import ViewAdminUserList from "@/views/adminPage/listUserView/ViewAdminUserList";
 
 export default function Page() {
     return (
         <AuthGuardAdmin>
-            <ViewAdminProductList />
+            <ViewAdminUserList />
         </AuthGuardAdmin>
     );
 }
