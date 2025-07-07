@@ -31,7 +31,7 @@ git clone https://github.com/Pdlrxd/TallerIDWM.git
 
 ## Configurar el Proyecto
 
-Después de clonar el repositorio, navega a la carpeta del proyecto:
+Después de clonar el repositorio, utiliza Git Bash para ejecutar comandos en la terminal, navega a la carpeta del proyecto:
 
 ```bash
 cd TallerIDWM-FrontEnd/
