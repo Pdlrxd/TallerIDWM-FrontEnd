@@ -1,46 +1,65 @@
-Este es un proyecto Next.js creado con create-next-app.
+# Taller 2: E-Commerce
 
-## Primeros pasos
+El siguiente código corresponde al taller número 2 el cual busca implementar un Front-End el cual cumpla la función de un comercio digital
 
-Para comenzar, ejecuta el servidor de desarrollo:
+integrates:
+- Pedro Soto Ticona 24.161.653-3
+pedro.soto02@alumnos.ucn.cl
+
+## Requerimientos
+
+- Node.js (versión 18 o superior recomendada)
+- npm (viene con Node.js) o yarn como gestor de paquetes
+- Next.js (viene en las dependencias, solo debes instalar con npm/yarn)
+- Un archivo .env configurado para las variables de entorno necesarias (puedes usar .env.example como plantilla)
+- Tener acceso al backend funcionando
+
+## Clonar Repositorio
+
+Clona el repositorio **Front-End** con el siguiente comando:
+```bash
+git clone https://github.com/Pdlrxd/TallerIDWM-FrontEnd.git
+```
+
+Clona el repositorio **Back-End** con el siguiente comando:
+```bash
+git clone https://github.com/Pdlrxd/TallerIDWM.git
+```
+- Advertencia:
+	- Revisa el documento README.md Para levantar correctamente el Back-End
+
+
+## Configurar el Proyecto
+
+Después de clonar el repositorio, navega a la carpeta del proyecto:
+
+```bash
+cd TallerIDWM-FrontEnd/
+```
+Despues de acceder al directorio, instalamos **npm** con el siguiente comando:
+
+```bash
+npm install
+```
+
+Crea el archivo `.env` en la raiz del proyect para configurar la conexión a el Back-End, ingresamos lo que tiene `.env.example` en .env e ingresamos nuestros respectivos direcciones para el Back-End
+```bash
+NEXT_PUBLIC_API_URL=URL-API
+DOMAIN=localhost
+```
+Donde URL-API es la direccion de la API
+
+Direccion de la api:
+```bash
+https://localhost:7194/api/
+```
+
+## Ejecución del proyecto
+
+Para la correcta ejecución del proyecto debemos ejecutar el siguiente comando:
 
 ```bash
 npm run dev
-# o
-yarn dev
-# o
-pnpm dev
-# o
-bun dev
-Abre http://localhost:3000 en tu navegador para ver el resultado.
+```
 
-Puedes empezar a editar la página modificando app/page.tsx. La página se actualizará automáticamente conforme hagas cambios.
-
-Este proyecto utiliza next/font para optimizar y cargar automáticamente Geist, una nueva familia de fuentes creada por Vercel.
-
-Aprende más
-Para aprender más sobre Next.js, consulta los siguientes recursos:
-
-Documentación de Next.js — Aprende sobre las características y la API de Next.js.
-
-Tutorial interactivo de Next.js — Un tutorial paso a paso para aprender Next.js.
-
-Repositorio de Next.js en GitHub — ¡Tu feedback y contribuciones son bienvenidas!
-
-Despliegue en Vercel
-La forma más sencilla de desplegar tu aplicación Next.js es usando la plataforma Vercel, creada por los creadores de Next.js.
-
-Consulta la documentación oficial de despliegue para más detalles.
-
-Información adicional del proyecto
-Variables de entorno
-Copia .env.example a .env.local y completa con los valores reales para la ejecución local (por ejemplo, la URL de la API).
-
-Recuerda que .env.local no debe ser versionado.
-
-Ejecución del backend
-Para que este frontend funcione correctamente, asegúrate de tener el backend corriendo en la URL configurada en las variables de entorno.
-
-Equipo de trabajo
-Nombre completo	Correo electrónico	RUT
-Pedro Miguel Soto Ticona	pedro.soto@example.com	12.345.678-9
+Este se ejecutará en la siguiente url: http://localhost:3000
